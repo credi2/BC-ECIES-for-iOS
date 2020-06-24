@@ -11,14 +11,12 @@ import org.bouncycastle.crypto.generators.EphemeralKeyPairGenerator;
 import org.bouncycastle.crypto.params.*;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.BigIntegers;
-import org.bouncycastle.util.encoders.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 
-
-public class IESEngineGCM {
+class IESEngineGCM {
     BasicAgreement agree;
     DerivationFunction kdf;
     BufferedBlockCipher cipher;

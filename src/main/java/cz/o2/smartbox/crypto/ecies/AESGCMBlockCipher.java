@@ -12,7 +12,7 @@ import java.security.NoSuchProviderException;
 import javax.crypto.NoSuchPaddingException;
 
 
-public class AESGCMBlockCipher extends BufferedBlockCipher {
+class AESGCMBlockCipher extends BufferedBlockCipher {
 
     private GCMBlockCipher internalCipher;
 
