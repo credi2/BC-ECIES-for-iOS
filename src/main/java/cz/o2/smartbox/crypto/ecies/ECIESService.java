@@ -19,7 +19,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 
 public class ECIESService {
 
-    public static String encrypt(String plaintext, byte[] publicKeyBytes, String curveName) throws Exception {
+    public static byte[] encrypt(byte[] plainTextBytes, byte[] publicKeyBytes, String curveName) throws Exception {
 
         org.bouncycastle.jce.spec.ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec(curveName);
         KeyFactory keyFactory = KeyFactory.getInstance("EC", new BouncyCastleProvider());
@@ -27,8 +27,6 @@ public class ECIESService {
         java.security.spec.ECPoint point = org.bouncycastle.jce.ECPointUtil.decodePoint(curvedParams.getCurve(), publicKeyBytes);
         java.security.spec.ECPublicKeySpec pubKeySpec = new ECPublicKeySpec(point, curvedParams);
         org.bouncycastle.jce.interfaces.ECPublicKey publicKey = (ECPublicKey) keyFactory.generatePublic(pubKeySpec);
-
-        byte[] inputBytes = plaintext.getBytes();
 
         org.bouncycastle.jce.spec.IESParameterSpec params = new IESParameterSpec(null, null, 128, 128, null);
         IESCipherGCM cipher = new IESCipherGCM(
@@ -39,8 +37,8 @@ public class ECIESService {
 
         cipher.engineInit(Cipher.ENCRYPT_MODE, publicKey, params, new SecureRandom());
 
-        byte[] cipherResult = cipher.engineDoFinal(inputBytes, 0, inputBytes.length);
-        return Base64.toBase64String(cipherResult);
+        byte[] cipherResult = cipher.engineDoFinal(plainTextBytes, 0, plainTextBytes.length);
+        return cipherResult;
     }
 
     public static String decrypt(String ciphertext, byte[] privateKeyBytes) throws Exception {

@@ -50,7 +50,7 @@ public class Main {
 
     public String testEncrypt (String plaintext, String peerPublicKey) throws Exception {
         byte[] publicKey = Base64.decode(peerPublicKey);
-        return ECIESService.encrypt(plaintext, publicKey, "secp256r1");
+        return Base64.toBase64String(ECIESService.encrypt(plaintext.getBytes(), publicKey, "secp256r1"));
     }
 
     public String testDecrypt (String ciphertext, String ownPrivateKey) throws Exception {
